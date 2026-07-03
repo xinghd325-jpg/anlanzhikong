@@ -3030,6 +3030,7 @@
                   <td><span class="rule-status-tag" style="background:#F6FFED;color:#52C41A;">已启用</span></td>
                   <td style="font-size:12px;">07/08 09:00</td>
                   <td>
+                    <a href="javascript:void(0)" onclick="openWarningRuleDetail(0)" style="color:#1677FF;font-size:12px;margin-right:8px;">查看</a>
                     <a href="javascript:void(0)" style="color:#FF4D4F;font-size:12px;">停用</a>
                   </td>
                 </tr>
@@ -3047,6 +3048,7 @@
                   <td><span class="rule-status-tag" style="background:#F6FFED;color:#52C41A;">已启用</span></td>
                   <td style="font-size:12px;">07/07 14:30</td>
                   <td>
+                    <a href="javascript:void(0)" onclick="openWarningRuleDetail(1)" style="color:#1677FF;font-size:12px;margin-right:8px;">查看</a>
                     <a href="javascript:void(0)" style="color:#FF4D4F;font-size:12px;">停用</a>
                   </td>
                 </tr>
@@ -3064,6 +3066,7 @@
                   <td><span class="rule-status-tag" style="background:#F6FFED;color:#52C41A;">已启用</span></td>
                   <td style="font-size:12px;">07/06 10:15</td>
                   <td>
+                    <a href="javascript:void(0)" onclick="openWarningRuleDetail(2)" style="color:#1677FF;font-size:12px;margin-right:8px;">查看</a>
                     <a href="javascript:void(0)" style="color:#FF4D4F;font-size:12px;">停用</a>
                   </td>
                 </tr>
@@ -3081,6 +3084,7 @@
                   <td><span class="rule-status-tag" style="background:#F6FFED;color:#52C41A;">已启用</span></td>
                   <td style="font-size:12px;">07/08 11:20</td>
                   <td>
+                    <a href="javascript:void(0)" onclick="openWarningRuleDetail(3)" style="color:#1677FF;font-size:12px;margin-right:8px;">查看</a>
                     <a href="javascript:void(0)" style="color:#FF4D4F;font-size:12px;">停用</a>
                   </td>
                 </tr>
@@ -3098,6 +3102,7 @@
                   <td><span class="rule-status-tag" style="background:#F5F5F5;color:#8C8C8C;">已停用</span></td>
                   <td style="font-size:12px;">07/05 16:00</td>
                   <td>
+                    <a href="javascript:void(0)" onclick="openWarningRuleDetail(4)" style="color:#1677FF;font-size:12px;margin-right:8px;">查看</a>
                     <a href="javascript:void(0)" style="color:#52C41A;font-size:12px;">启用</a>
                   </td>
                 </tr>
@@ -4572,18 +4577,18 @@
       </div>
       <div class="drawer-body">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;font-size:13px;">
-          <div><span style="color:#8C8C8C;">规则名称：</span>婚恋家庭高风险激增预警</div>
-          <div><span style="color:#8C8C8C;">规则状态：</span><span style="color:#52C41A;">已启用</span></div>
-          <div><span style="color:#8C8C8C;">预警等级：</span>高风险</div>
-          <div><span style="color:#8C8C8C;">时间范围：</span>近 7 天</div>
-          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">区域范围：</span>全市</div>
-          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">事项类型：</span>婚恋家庭、邻里关系</div>
-          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">事项分级：</span>高风险、中风险</div>
-          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">事项来源：</span>大厅来访、群众线索、网格事件</div>
-          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">人员类型：</span>重点人员、重点群体</div>
-          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">附加标签：</span>扬言行为、暴力倾向、使用刀具/器具</div>
-          <div><span style="color:#8C8C8C;">触发条件：</span>数量 ≥ 10 条</div>
-          <div><span style="color:#8C8C8C;">创建时间：</span>2025/06/01 10:00</div>
+          <div><span style="color:#8C8C8C;">规则名称：</span><span id="detailRuleName"></span></div>
+          <div><span style="color:#8C8C8C;">规则状态：</span><span id="detailRuleStatus"></span></div>
+          <div><span style="color:#8C8C8C;">预警类型：</span><span id="detailRuleType"></span></div>
+          <div><span style="color:#8C8C8C;">预警等级：</span><span id="detailRuleLevel"></span></div>
+          <div><span style="color:#8C8C8C;">时间范围：</span><span id="detailTimeRange"></span></div>
+          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">区域范围：</span><span id="detailArea"></span></div>
+          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">事项类型：</span><span id="detailCaseType"></span></div>
+          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">事项分级：</span><span id="detailCaseLevel"></span></div>
+          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">事项来源：</span><span id="detailSource"></span></div>
+          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">人员类型：</span><span id="detailPerson"></span></div>
+          <div style="grid-column:1/3;"><span style="color:#8C8C8C;">附加标签：</span><span id="detailTags"></span></div>
+          <div><span style="color:#8C8C8C;">触发条件：</span><span id="detailTrigger"></span></div>
         </div>
       </div>
       <div class="drawer-footer">
@@ -5043,11 +5048,12 @@
               <select id="surgeTimeUnit" style="width:60px;"><option value="天">天</option><option value="小时">小时</option></select>
             </div>
             <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
-              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>区域范围 <span class="select-all-group" id="areaScopeSelectAll" style="display:none;"><a onclick="toggleAreaScope(this, true)">全选</a><a onclick="toggleAreaScope(this, false)">取消全选</a></span></span>
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>区域范围</span>
               <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
                 <label class="radio-item"><input type="radio" name="areaScope" value="all" id="areaAll" checked onchange="toggleStreetList()"> 全市</label>
                 <label class="radio-item"><input type="radio" name="areaScope" value="custom" id="areaCustom" onchange="toggleStreetList()"> 指定街道</label>
               </div>
+              <div id="areaHint" style="display:none;color:#FA8C16;font-size:12px;background:#FFF7E6;padding:6px 10px;border-radius:4px;">提示：选择多个指定街道时，预警按各街道独立计算，单个街道事项数达到预警阈值即触发</div>
               <div id="streetListWrap" style="display:none;">
                 <div class="checkbox-group">
                   <label class="checkbox-item"><input type="checkbox" value="兰江街道"> 兰江街道</label>
@@ -5069,100 +5075,203 @@
               </div>
             </div>
             <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
-              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>事项类型 <span class="select-all-group"><a onclick="toggleAll(this, true)">全选</a><a onclick="toggleAll(this, false)">取消全选</a></span></span>
-              <div class="checkbox-group">
-                <label class="checkbox-item"><input type="checkbox" value="婚恋家庭"> 婚恋家庭</label>
-                <label class="checkbox-item"><input type="checkbox" value="邻里关系"> 邻里关系</label>
-                <label class="checkbox-item"><input type="checkbox" value="涉众金融"> 涉众金融</label>
-                <label class="checkbox-item"><input type="checkbox" value="欠薪欠资"> 欠薪欠资</label>
-                <label class="checkbox-item"><input type="checkbox" value="征地拆迁"> 征地拆迁</label>
-                <label class="checkbox-item"><input type="checkbox" value="医疗卫生"> 医疗卫生</label>
-                <label class="checkbox-item"><input type="checkbox" value="交通运输"> 交通运输</label>
-                <label class="checkbox-item"><input type="checkbox" value="房产物业"> 房产物业</label>
-                <label class="checkbox-item"><input type="checkbox" value="山林山地"> 山林山地</label>
-                <label class="checkbox-item"><input type="checkbox" value="环保邻避"> 环保邻避</label>
-                <label class="checkbox-item"><input type="checkbox" value="教育培训"> 教育培训</label>
-                <label class="checkbox-item"><input type="checkbox" value="求职求学"> 求职求学</label>
-                <label class="checkbox-item"><input type="checkbox" value="校园安全"> 校园安全</label>
-                <label class="checkbox-item"><input type="checkbox" value="重点信访事项"> 重点信访事项</label>
-                <label class="checkbox-item"><input type="checkbox" value="涉法涉诉"> 涉法涉诉</label>
-                <label class="checkbox-item"><input type="checkbox" value="涉劳动就业"> 涉劳动就业</label>
-                <label class="checkbox-item"><input type="checkbox" value="涉债务经济纠纷"> 涉债务经济纠纷</label>
-                <label class="checkbox-item"><input type="checkbox" value="其他纠纷-物业管理"> 其他纠纷-物业管理</label>
-                <label class="checkbox-item"><input type="checkbox" value="其他纠纷-消费"> 其他纠纷-消费</label>
-                <label class="checkbox-item"><input type="checkbox" value="其他纠纷-教育"> 其他纠纷-教育</label>
-                <label class="checkbox-item"><input type="checkbox" value="其他纠纷-公共环境"> 其他纠纷-公共环境</label>
-                <label class="checkbox-item"><input type="checkbox" value="其他纠纷-城市管理"> 其他纠纷-城市管理</label>
-                <label class="checkbox-item"><input type="checkbox" value="其他纠纷-村务管理"> 其他纠纷-村务管理</label>
-                <label class="checkbox-item"><input type="checkbox" value="其他纠纷-侵权"> 其他纠纷-侵权</label>
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>事项类型 </span>
+              <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
+                <label class="radio-item"><input type="radio" name="typeScope" value="all" id="typeAll" checked onchange="toggleTypeList()"> 全部</label>
+                <label class="radio-item"><input type="radio" name="typeScope" value="custom" id="typeCustom" onchange="toggleTypeList()"> 选择</label>
+              </div>
+              <div id="typeListWrap" style="display:none;">
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox" value="婚恋家庭"> 婚恋家庭</label>
+                  <label class="checkbox-item"><input type="checkbox" value="邻里关系"> 邻里关系</label>
+                  <label class="checkbox-item"><input type="checkbox" value="涉众金融"> 涉众金融</label>
+                  <label class="checkbox-item"><input type="checkbox" value="欠薪欠资"> 欠薪欠资</label>
+                  <label class="checkbox-item"><input type="checkbox" value="征地拆迁"> 征地拆迁</label>
+                  <label class="checkbox-item"><input type="checkbox" value="医疗卫生"> 医疗卫生</label>
+                  <label class="checkbox-item"><input type="checkbox" value="交通运输"> 交通运输</label>
+                  <label class="checkbox-item"><input type="checkbox" value="房产物业"> 房产物业</label>
+                  <label class="checkbox-item"><input type="checkbox" value="山林山地"> 山林山地</label>
+                  <label class="checkbox-item"><input type="checkbox" value="环保邻避"> 环保邻避</label>
+                  <label class="checkbox-item"><input type="checkbox" value="教育培训"> 教育培训</label>
+                  <label class="checkbox-item"><input type="checkbox" value="求职求学"> 求职求学</label>
+                  <label class="checkbox-item"><input type="checkbox" value="校园安全"> 校园安全</label>
+                  <label class="checkbox-item"><input type="checkbox" value="重点信访事项"> 重点信访事项</label>
+                  <label class="checkbox-item"><input type="checkbox" value="涉法涉诉"> 涉法涉诉</label>
+                  <label class="checkbox-item"><input type="checkbox" value="涉劳动就业"> 涉劳动就业</label>
+                  <label class="checkbox-item"><input type="checkbox" value="涉债务经济纠纷"> 涉债务经济纠纷</label>
+                  <label class="checkbox-item"><input type="checkbox" value="其他纠纷-物业管理"> 其他纠纷-物业管理</label>
+                  <label class="checkbox-item"><input type="checkbox" value="其他纠纷-消费"> 其他纠纷-消费</label>
+                  <label class="checkbox-item"><input type="checkbox" value="其他纠纷-教育"> 其他纠纷-教育</label>
+                  <label class="checkbox-item"><input type="checkbox" value="其他纠纷-公共环境"> 其他纠纷-公共环境</label>
+                  <label class="checkbox-item"><input type="checkbox" value="其他纠纷-城市管理"> 其他纠纷-城市管理</label>
+                  <label class="checkbox-item"><input type="checkbox" value="其他纠纷-村务管理"> 其他纠纷-村务管理</label>
+                  <label class="checkbox-item"><input type="checkbox" value="其他纠纷-侵权"> 其他纠纷-侵权</label>
+                </div>
               </div>
             </div>
             <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
-              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>事项分级 <span class="select-all-group"><a onclick="toggleAll(this, true)">全选</a><a onclick="toggleAll(this, false)">取消全选</a></span></span>
-              <div class="checkbox-group">
-                <label class="checkbox-item"><input type="checkbox" value="高风险"> 高风险</label>
-                <label class="checkbox-item"><input type="checkbox" value="中风险"> 中风险</label>
-                <label class="checkbox-item"><input type="checkbox" value="低风险"> 低风险</label>
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>事项分级 </span>
+              <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
+                <label class="radio-item"><input type="radio" name="levelScope" value="all" id="levelAll" checked onchange="toggleLevelList()"> 全部</label>
+                <label class="radio-item"><input type="radio" name="levelScope" value="custom" id="levelCustom" onchange="toggleLevelList()"> 选择</label>
+              </div>
+              <div id="levelListWrap" style="display:none;">
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox" value="高风险"> 高风险</label>
+                  <label class="checkbox-item"><input type="checkbox" value="中风险"> 中风险</label>
+                  <label class="checkbox-item"><input type="checkbox" value="低风险"> 低风险</label>
+                </div>
               </div>
             </div>
             <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
-              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>事项来源 <span class="select-all-group"><a onclick="toggleAll(this, true)">全选</a><a onclick="toggleAll(this, false)">取消全选</a></span></span>
-              <div class="checkbox-group">
-                <label class="checkbox-item"><input type="checkbox" value="大厅来访"> 大厅来访</label>
-                <label class="checkbox-item"><input type="checkbox" value="群众线索"> 群众线索</label>
-                <label class="checkbox-item"><input type="checkbox" value="网格事件"> 网格事件</label>
-                <label class="checkbox-item"><input type="checkbox" value="自主排查"> 自主排查</label>
-                <label class="checkbox-item"><input type="checkbox" value="公安"> 公安</label>
-                <label class="checkbox-item"><input type="checkbox"> 法院</label>
-                <label class="checkbox-item"><input type="checkbox"> 检察院</label>
-                <label class="checkbox-item"><input type="checkbox"> 信访</label>
-                <label class="checkbox-item"><input type="checkbox"> 三方应用</label>
-                <label class="checkbox-item"><input type="checkbox"> 其他</label>
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>事项来源 </span>
+              <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
+                <label class="radio-item"><input type="radio" name="sourceScope" value="all" id="sourceAll" checked onchange="toggleSourceList()"> 全部</label>
+                <label class="radio-item"><input type="radio" name="sourceScope" value="custom" id="sourceCustom" onchange="toggleSourceList()"> 选择</label>
+              </div>
+              <div id="sourceListWrap" style="display:none;">
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox" value="大厅来访"> 大厅来访</label>
+                  <label class="checkbox-item"><input type="checkbox" value="群众线索"> 群众线索</label>
+                  <label class="checkbox-item"><input type="checkbox" value="网格事件"> 网格事件</label>
+                  <label class="checkbox-item"><input type="checkbox" value="自主排查"> 自主排查</label>
+                  <label class="checkbox-item"><input type="checkbox" value="公安"> 公安</label>
+                  <label class="checkbox-item"><input type="checkbox"> 法院</label>
+                  <label class="checkbox-item"><input type="checkbox"> 检察院</label>
+                  <label class="checkbox-item"><input type="checkbox"> 信访</label>
+                  <label class="checkbox-item"><input type="checkbox"> 三方应用</label>
+                  <label class="checkbox-item"><input type="checkbox"> 其他</label>
+                </div>
               </div>
             </div>
             <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
-              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>人员类型 <span class="select-all-group"><a onclick="toggleAll(this, true)">全选</a><a onclick="toggleAll(this, false)">取消全选</a></span></span>
-              <div class="checkbox-group">
-                <label class="checkbox-item"><input type="checkbox"> 未成年人</label>
-                <label class="checkbox-item"><input type="checkbox"> 学生</label>
-                <label class="checkbox-item"><input type="checkbox"> 体制内人员</label>
-                <label class="checkbox-item"><input type="checkbox"> 精神障碍患者</label>
-                <label class="checkbox-item"><input type="checkbox"> 存在人格障碍</label>
-                <label class="checkbox-item"><input type="checkbox"> 刑满释放人员</label>
-                <label class="checkbox-item"><input type="checkbox"> 社区矫正人员</label>
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>人员类型 </span>
+              <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
+                <label class="radio-item"><input type="radio" name="personScope" value="all" id="personAll" checked onchange="togglePersonList()"> 全部</label>
+                <label class="radio-item"><input type="radio" name="personScope" value="custom" id="personCustom" onchange="togglePersonList()"> 选择</label>
+              </div>
+              <div id="personListWrap" style="display:none;">
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox"> 未成年人</label>
+                  <label class="checkbox-item"><input type="checkbox"> 学生</label>
+                  <label class="checkbox-item"><input type="checkbox"> 体制内人员</label>
+                  <label class="checkbox-item"><input type="checkbox"> 精神障碍患者</label>
+                  <label class="checkbox-item"><input type="checkbox"> 存在人格障碍（存在心理健康问题）</label>
+                  <label class="checkbox-item"><input type="checkbox"> 刑满释放人员</label>
+                  <label class="checkbox-item"><input type="checkbox"> 社区矫正人员</label>
+                </div>
               </div>
             </div>
             <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
-              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>附加标签 <span class="select-all-group"><a onclick="toggleAll(this, true)">全选</a><a onclick="toggleAll(this, false)">取消全选</a></span></span>
-              <div class="checkbox-group">
-                <label class="checkbox-item"><input type="checkbox"> 扬言行为</label>
-                <label class="checkbox-item"><input type="checkbox"> 暴力倾向</label>
-                <label class="checkbox-item"><input type="checkbox"> 危险/过激行为</label>
-                <label class="checkbox-item"><input type="checkbox"> 肢体冲突</label>
-                <label class="checkbox-item"><input type="checkbox"> 使用刀具/器具</label>
-                <label class="checkbox-item"><input type="checkbox"> 前科人员</label>
-                <label class="checkbox-item"><input type="checkbox"> 不良嗜好-赌博</label>
-                <label class="checkbox-item"><input type="checkbox"> 不良嗜好-酗酒</label>
-                <label class="checkbox-item"><input type="checkbox"> 不良嗜好-嫖娼</label>
-                <label class="checkbox-item"><input type="checkbox"> 不良嗜好-吸毒</label>
-                <label class="checkbox-item"><input type="checkbox"> 身患重大疾病</label>
-                <label class="checkbox-item"><input type="checkbox"> 厌世自残自杀行为</label>
-                <label class="checkbox-item"><input type="checkbox"> 购买危险物品</label>
-                <label class="checkbox-item"><input type="checkbox"> 上网搜索危险行为</label>
-                <label class="checkbox-item"><input type="checkbox"> 铤而走险风险</label>
-                <label class="checkbox-item"><input type="checkbox"> 涉经济纠纷</label>
-                <label class="checkbox-item"><input type="checkbox"> 积怨（6个月以上）</label>
-                <label class="checkbox-item"><input type="checkbox"> 三失一偏</label>
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>三失一偏情况 </span>
+              <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
+                <label class="radio-item"><input type="radio" name="lostScope" value="all" id="lostAll" checked onchange="toggleLostList()"> 全部</label>
+                <label class="radio-item"><input type="radio" name="lostScope" value="custom" id="lostCustom" onchange="toggleLostList()"> 选择</label>
+              </div>
+              <div id="lostListWrap" style="display:none;">
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox"> 生活失意</label>
+                  <label class="checkbox-item"><input type="checkbox"> 心态失衡</label>
+                  <label class="checkbox-item"><input type="checkbox"> 行为失常</label>
+                  <label class="checkbox-item"><input type="checkbox"> 性格偏执</label>
+                </div>
+              </div>
+            </div>
+            <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>婚姻家庭感情状况 </span>
+              <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
+                <label class="radio-item"><input type="radio" name="marriageScope" value="all" id="marriageAll" checked onchange="toggleMarriageList()"> 全部</label>
+                <label class="radio-item"><input type="radio" name="marriageScope" value="custom" id="marriageCustom" onchange="toggleMarriageList()"> 选择</label>
+              </div>
+              <div id="marriageListWrap" style="display:none;">
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox"> 涉婚姻家庭纠纷</label>
+                  <label class="checkbox-item"><input type="checkbox"> 单亲家庭</label>
+                  <label class="checkbox-item"><input type="checkbox"> 婚姻状况-未婚</label>
+                  <label class="checkbox-item"><input type="checkbox"> 婚姻状况-已婚</label>
+                  <label class="checkbox-item"><input type="checkbox"> 婚姻状况-离异</label>
+                  <label class="checkbox-item"><input type="checkbox"> 婚姻状况-离异后再婚</label>
+                  <label class="checkbox-item"><input type="checkbox"> 孕育子女-无子女</label>
+                  <label class="checkbox-item"><input type="checkbox"> 孕育子女-有子女（亲生）</label>
+                  <label class="checkbox-item"><input type="checkbox"> 孕育子女-有子女（非亲生）</label>
+                  <label class="checkbox-item"><input type="checkbox"> 涉情感纠纷</label>
+                  <label class="checkbox-item"><input type="checkbox"> 存在三角关系</label>
+                </div>
+              </div>
+            </div>
+            <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>经济条件情况 </span>
+              <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
+                <label class="radio-item"><input type="radio" name="economyScope" value="all" id="economyAll" checked onchange="toggleEconomyList()"> 全部</label>
+                <label class="radio-item"><input type="radio" name="economyScope" value="custom" id="economyCustom" onchange="toggleEconomyList()"> 选择</label>
+              </div>
+              <div id="economyListWrap" style="display:none;">
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox"> 涉经济纠纷</label>
+                  <label class="checkbox-item"><input type="checkbox"> 低保/低边情况-低保户</label>
+                  <label class="checkbox-item"><input type="checkbox"> 低保/低边情况-低边户</label>
+                  <label class="checkbox-item"><input type="checkbox"> 低保/低边情况-否</label>
+                  <label class="checkbox-item"><input type="checkbox"> 残疾人员</label>
+                  <label class="checkbox-item"><input type="checkbox"> 固定工作</label>
+                  <label class="checkbox-item"><input type="checkbox"> 固定收入</label>
+                  <label class="checkbox-item"><input type="checkbox"> 自有房屋</label>
+                  <label class="checkbox-item"><input type="checkbox"> 持有车辆</label>
+                </div>
+              </div>
+            </div>
+            <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>行政行为 </span>
+              <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
+                <label class="radio-item"><input type="radio" name="adminScope" value="all" id="adminAll" checked onchange="toggleAdminList()"> 全部</label>
+                <label class="radio-item"><input type="radio" name="adminScope" value="custom" id="adminCustom" onchange="toggleAdminList()"> 选择</label>
+              </div>
+              <div id="adminListWrap" style="display:none;">
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox"> 报警记录-0次</label>
+                  <label class="checkbox-item"><input type="checkbox"> 报警记录-1次</label>
+                  <label class="checkbox-item"><input type="checkbox"> 报警记录-多次</label>
+                  <label class="checkbox-item"><input type="checkbox"> 信访记录-0次</label>
+                  <label class="checkbox-item"><input type="checkbox"> 信访记录-1次</label>
+                  <label class="checkbox-item"><input type="checkbox"> 信访记录-多次</label>
+                  <label class="checkbox-item"><input type="checkbox"> 法院案件</label>
+                  <label class="checkbox-item"><input type="checkbox"> 法院已判决但未执行到位情况</label>
+                  <label class="checkbox-item"><input type="checkbox"> 涉起诉不批捕案件</label>
+                  <label class="checkbox-item"><input type="checkbox"> 开展过专门调解</label>
+                  <label class="checkbox-item"><input type="checkbox"> 积怨（矛盾纠纷存在6个月以上）</label>
+                </div>
+              </div>
+            </div>
+            <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>其他标签 </span>
+              <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px;">
+                <label class="radio-item"><input type="radio" name="otherScope" value="all" id="otherAll" checked onchange="toggleOtherList()"> 全部</label>
+                <label class="radio-item"><input type="radio" name="otherScope" value="custom" id="otherCustom" onchange="toggleOtherList()"> 选择</label>
+              </div>
+              <div id="otherListWrap" style="display:none;">
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox"> 扬言行为</label>
+                  <label class="checkbox-item"><input type="checkbox"> 暴力倾向</label>
+                  <label class="checkbox-item"><input type="checkbox"> 危险/过激行为</label>
+                  <label class="checkbox-item"><input type="checkbox"> 肢体冲突</label>
+                  <label class="checkbox-item"><input type="checkbox"> 使用刀具/器具</label>
+                  <label class="checkbox-item"><input type="checkbox"> 前科人员</label>
+                  <label class="checkbox-item"><input type="checkbox"> 不良嗜好-赌博</label>
+                  <label class="checkbox-item"><input type="checkbox"> 不良嗜好-酗酒</label>
+                  <label class="checkbox-item"><input type="checkbox"> 不良嗜好-嫖娼</label>
+                  <label class="checkbox-item"><input type="checkbox"> 不良嗜好-吸毒（包含吸食笑气）</label>
+                  <label class="checkbox-item"><input type="checkbox"> 不良嗜好-其他多种不良嗜好</label>
+                  <label class="checkbox-item"><input type="checkbox"> 身患重大疾病</label>
+                  <label class="checkbox-item"><input type="checkbox"> 厌世自残自杀行为</label>
+                  <label class="checkbox-item"><input type="checkbox"> 购买危险物品</label>
+                  <label class="checkbox-item"><input type="checkbox"> 上网搜索危险行为</label>
+                  <label class="checkbox-item"><input type="checkbox"> 铤而走险风险</label>
+                </div>
               </div>
             </div>
             <div class="condition-row" style="align-items:center;">
               <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>触发条件</span>
               <span style="font-size:13px;color:#333;">数量</span>
-              <select id="surgeOperator" style="width:60px;">
-                <option>≥</option>
-                <option>></option>
-                <option>=</option>
-              </select>
+              <span style="font-size:13px;color:#333;">≥</span>
               <input type="number" id="surgeCount" min="1" style="width:70px;">
               <span class="cond-sep">条</span>
             </div>
@@ -5189,10 +5298,7 @@
             </div>
             <div class="condition-row" style="align-items:center;">
               <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>关联矛盾纠纷数</span>
-              <select id="subjectOperator" style="width:80px;">
-                <option>≥</option>
-                <option>></option>
-              </select>
+              <span style="font-size:13px;color:#333;">≥</span>
               <input type="number" id="subjectCount" value="3" min="1" style="width:70px;">
               <span class="cond-sep">件</span>
             </div>
@@ -5868,13 +5974,103 @@
       var val = document.querySelector('input[name="areaScope"]:checked').value;
       var isCustom = val === 'custom';
       document.getElementById('streetListWrap').style.display = isCustom ? 'block' : 'none';
-      document.getElementById('areaScopeSelectAll').style.display = isCustom ? '' : 'none';
+      document.getElementById('areaHint').style.display = isCustom ? 'block' : 'none';
     }
 
     function toggleAreaScope(el, selectAll) {
       document.querySelectorAll('#streetListWrap input[type="checkbox"]').forEach(function(cb) {
         cb.checked = selectAll;
       });
+    }
+
+    function toggleTypeList() {
+      var val = document.querySelector('input[name="typeScope"]:checked').value;
+      var isCustom = val === 'custom';
+      document.getElementById('typeListWrap').style.display = isCustom ? 'block' : 'none';
+      document.getElementById('typeSelectAll').style.display = isCustom ? '' : 'none';
+    }
+    function toggleTypeScope(el, selectAll) {
+      document.querySelectorAll('#typeListWrap input[type="checkbox"]').forEach(function(cb) { cb.checked = selectAll; });
+    }
+
+    function toggleLevelList() {
+      var val = document.querySelector('input[name="levelScope"]:checked').value;
+      var isCustom = val === 'custom';
+      document.getElementById('levelListWrap').style.display = isCustom ? 'block' : 'none';
+      document.getElementById('levelSelectAll').style.display = isCustom ? '' : 'none';
+    }
+    function toggleLevelScope(el, selectAll) {
+      document.querySelectorAll('#levelListWrap input[type="checkbox"]').forEach(function(cb) { cb.checked = selectAll; });
+    }
+
+    function toggleSourceList() {
+      var val = document.querySelector('input[name="sourceScope"]:checked').value;
+      var isCustom = val === 'custom';
+      document.getElementById('sourceListWrap').style.display = isCustom ? 'block' : 'none';
+      document.getElementById('sourceSelectAll').style.display = isCustom ? '' : 'none';
+    }
+    function toggleSourceScope(el, selectAll) {
+      document.querySelectorAll('#sourceListWrap input[type="checkbox"]').forEach(function(cb) { cb.checked = selectAll; });
+    }
+
+    function togglePersonList() {
+      var val = document.querySelector('input[name="personScope"]:checked').value;
+      var isCustom = val === 'custom';
+      document.getElementById('personListWrap').style.display = isCustom ? 'block' : 'none';
+      document.getElementById('personSelectAll').style.display = isCustom ? '' : 'none';
+    }
+    function togglePersonScope(el, selectAll) {
+      document.querySelectorAll('#personListWrap input[type="checkbox"]').forEach(function(cb) { cb.checked = selectAll; });
+    }
+
+    function toggleLostList() {
+      var val = document.querySelector('input[name="lostScope"]:checked').value;
+      var isCustom = val === 'custom';
+      document.getElementById('lostListWrap').style.display = isCustom ? 'block' : 'none';
+      document.getElementById('lostSelectAll').style.display = isCustom ? '' : 'none';
+    }
+    function toggleLostScope(el, selectAll) {
+      document.querySelectorAll('#lostListWrap input[type="checkbox"]').forEach(function(cb) { cb.checked = selectAll; });
+    }
+
+    function toggleMarriageList() {
+      var val = document.querySelector('input[name="marriageScope"]:checked').value;
+      var isCustom = val === 'custom';
+      document.getElementById('marriageListWrap').style.display = isCustom ? 'block' : 'none';
+      document.getElementById('marriageSelectAll').style.display = isCustom ? '' : 'none';
+    }
+    function toggleMarriageScope(el, selectAll) {
+      document.querySelectorAll('#marriageListWrap input[type="checkbox"]').forEach(function(cb) { cb.checked = selectAll; });
+    }
+
+    function toggleEconomyList() {
+      var val = document.querySelector('input[name="economyScope"]:checked').value;
+      var isCustom = val === 'custom';
+      document.getElementById('economyListWrap').style.display = isCustom ? 'block' : 'none';
+      document.getElementById('economySelectAll').style.display = isCustom ? '' : 'none';
+    }
+    function toggleEconomyScope(el, selectAll) {
+      document.querySelectorAll('#economyListWrap input[type="checkbox"]').forEach(function(cb) { cb.checked = selectAll; });
+    }
+
+    function toggleAdminList() {
+      var val = document.querySelector('input[name="adminScope"]:checked').value;
+      var isCustom = val === 'custom';
+      document.getElementById('adminListWrap').style.display = isCustom ? 'block' : 'none';
+      document.getElementById('adminSelectAll').style.display = isCustom ? '' : 'none';
+    }
+    function toggleAdminScope(el, selectAll) {
+      document.querySelectorAll('#adminListWrap input[type="checkbox"]').forEach(function(cb) { cb.checked = selectAll; });
+    }
+
+    function toggleOtherList() {
+      var val = document.querySelector('input[name="otherScope"]:checked').value;
+      var isCustom = val === 'custom';
+      document.getElementById('otherListWrap').style.display = isCustom ? 'block' : 'none';
+      document.getElementById('otherSelectAll').style.display = isCustom ? '' : 'none';
+    }
+    function toggleOtherScope(el, selectAll) {
+      document.querySelectorAll('#otherListWrap input[type="checkbox"]').forEach(function(cb) { cb.checked = selectAll; });
     }
 
     /* ===== 统计分析 ===== */
@@ -6786,6 +6982,23 @@
         resetRuleForm();
       }
       openModal('addWarningRuleModal');
+    }
+
+    function openWarningRuleDetail(index) {
+      var rule = warningRules[index];
+      document.getElementById('detailRuleName').textContent = rule.name;
+      document.getElementById('detailRuleStatus').innerHTML = rule.status === '启用' ? '<span style="color:#52C41A;">已启用</span>' : '<span style="color:#8C8C8C;">已停用</span>';
+      document.getElementById('detailRuleType').textContent = rule.type === 'surge' ? '事项突增预警' : '主体风险预警';
+      document.getElementById('detailRuleLevel').textContent = rule.level;
+      document.getElementById('detailTimeRange').textContent = rule.type === 'surge' ? '近 ' + rule.timeValue + ' ' + rule.timeUnit : '近 ' + rule.months + ' 月';
+      document.getElementById('detailArea').textContent = rule.area === 'all' ? '全市' : (rule.areaList || []).join('、');
+      document.getElementById('detailCaseType').textContent = (rule.caseType && rule.caseType.length) ? rule.caseType.join('、') : '—';
+      document.getElementById('detailCaseLevel').textContent = (rule.caseLevel && rule.caseLevel.length) ? rule.caseLevel.join('、') : '—';
+      document.getElementById('detailSource').textContent = (rule.source && rule.source.length) ? rule.source.join('、') : '—';
+      document.getElementById('detailPerson').textContent = (rule.person && rule.person.length) ? rule.person.join('、') : '—';
+      document.getElementById('detailTags').textContent = (rule.tags && rule.tags.length) ? rule.tags.join('、') : '—';
+      document.getElementById('detailTrigger').textContent = rule.type === 'surge' ? '数量 ≥ ' + rule.count + ' 条' : '关联 ≥ ' + rule.count + ' 件';
+      openModal('warningRuleDetailModal');
     }
 
     // 切换预警类型显示不同条件
