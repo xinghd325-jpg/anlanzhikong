@@ -3150,7 +3150,7 @@
                     <td style="color:#FF4D4F;font-weight:600;">18</td>
                     <td>10</td>
                     <td style="font-size:12px;">2025/07/08 09:00:00</td>
-                    <td><div class="action-btns"><button class="btn-action" onclick="openWarningDetail('pending')">查看详情</button></div></td>
+                    <td><div class="action-btns"><button class="btn-action" onclick="openWarningDetail('pending', false)">查看详情</button></div></td>
                   </tr>
                   <tr>
                     <td style="font-family:monospace;font-size:12px;">YJ202507070002</td>
@@ -3161,7 +3161,7 @@
                     <td style="color:#FF4D4F;font-weight:600;">12</td>
                     <td>8</td>
                     <td style="font-size:12px;">2025/07/07 14:30:00</td>
-                    <td><div class="action-btns"><button class="btn-action" onclick="openWarningDetail('pending')">查看详情</button></div></td>
+                    <td><div class="action-btns"><button class="btn-action" onclick="openWarningDetail('pending', false)">查看详情</button></div></td>
                   </tr>
                   <tr>
                     <td style="font-family:monospace;font-size:12px;">YJ202507020001</td>
@@ -7069,7 +7069,7 @@
     }
 
     // 打开预警详情，根据状态显示不同追踪节点
-    function openWarningDetail(status) {
+    function openWarningDetail(status, canAssign) {
       // 隐藏所有追踪部分
       document.getElementById('trackingPending').style.display = 'none';
       document.getElementById('trackingProcessing').style.display = 'none';
@@ -7084,8 +7084,8 @@
         document.getElementById('trackingDone').style.display = 'block';
       }
 
-      // 指派按钮：仅未处置状态显示
-      document.getElementById('warningDetailAssignBtn').style.display = status === 'pending' ? '' : 'none';
+      // 指派按钮：仅未处置状态显示，且canAssign为true时显示
+      document.getElementById('warningDetailAssignBtn').style.display = (status === 'pending' && canAssign !== false) ? '' : 'none';
       // 处置按钮：已处置和处置中不显示
       document.getElementById('warningDetailProcessBtn').style.display = (status === 'done' || status === 'processing') ? 'none' : '';
 
