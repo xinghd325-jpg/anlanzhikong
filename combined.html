@@ -7086,14 +7086,14 @@
 
       // 指派按钮：仅未处置状态显示
       document.getElementById('warningDetailAssignBtn').style.display = status === 'pending' ? '' : 'none';
-      // 处置按钮：已处置不显示
-      document.getElementById('warningDetailProcessBtn').style.display = status === 'done' ? 'none' : '';
+      // 处置按钮：已处置和处置中不显示
+      document.getElementById('warningDetailProcessBtn').style.display = (status === 'done' || status === 'processing') ? 'none' : '';
 
       openModal('warningDetailModal');
     }
 
     function openSubjectDetail(status) {
-      document.getElementById('subjectDetailProcessBtn').style.display = status === 'done' ? 'none' : '';
+      document.getElementById('subjectDetailProcessBtn').style.display = (status === 'done' || status === 'processing') ? 'none' : '';
       openModal('subjectWarningDetailModal');
     }
 
