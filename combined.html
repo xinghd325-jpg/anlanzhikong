@@ -343,6 +343,11 @@
       padding: 7px 24px; font-size: 14px; cursor: pointer;
     }
     .btn-cancel:hover { border-color: #1677FF; color: #1677FF; }
+    #pageToast {
+      position: fixed; top: 72px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,.75); color: #fff; padding: 8px 20px;
+      border-radius: 4px; font-size: 14px; z-index: 100000; pointer-events: none;
+    }
 
     /* 弹窗表单 */
     .form-section { margin-bottom: 16px; }
@@ -564,6 +569,10 @@
     }
     .radio-item input[type="radio"] { width: 15px; height: 15px; accent-color: #1677FF; cursor: pointer; }
     .btn-add-condition:hover { background: #E8F0FE; border-color: #1677FF; }
+    .named-person-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; width: 100%; }
+    .named-person-row input { flex: 1; min-width: 0; }
+    .named-person-row .named-person-del { color: #FF4D4F; font-size: 13px; white-space: nowrap; cursor: pointer; }
+    .named-person-row .named-person-del:hover { text-decoration: underline; }
 
     /* ===== 风险等级标签 ===== */
     .level-tag {
@@ -2853,7 +2862,7 @@
           <div class="search-panel">
             <div class="search-grid">
               <div class="search-field"><label>预警编号</label><input type="text" placeholder="请输入预警编号"></div>
-              <div class="search-field"><label>预警类型</label><select><option value="">请选择</option><option>事项突增预警</option><option>主体风险预警</option></select></div>
+              <div class="search-field"><label>预警类型</label><select><option value="">请选择</option><option>事项突增预警</option><option>主体风险预警</option><option>指定人员预警</option></select></div>
               <div class="search-field"><label>预警等级</label><select><option value="">请选择</option><option>高风险</option><option>中风险</option><option>低风险</option></select></div>
               <div class="search-field"><label>所属区域</label><select><option value="">请选择</option><option>兰江街道</option><option>云山街道</option><option>游埠镇</option><option>诸葛镇</option><option>马涧镇</option><option>永昌街道</option><option>香溪镇</option><option>黄店镇</option><option>梅江镇</option><option>柏社乡</option></select></div>
               <div class="search-field"><label>预警状态</label><select><option value="">请选择</option><option>未处置</option><option>处置中</option><option>已处置</option></select></div>
@@ -2982,10 +2991,23 @@
                     <td>—</td>
                     <td><div class="action-btns"><button class="btn-action" onclick="openModal('subjectWarningDetailModal')">查看详情</button></div></td>
                   </tr>
+                  <tr>
+                    <td style="font-family:monospace;font-size:12px;">YJ202507090001</td>
+                    <td><span class="rule-status-tag" style="background:#F9F0FF;color:#722ED1;font-size:11px;">指定人员</span></td>
+                    <td>指定盯防人员预警</td>
+                    <td><span class="level-tag level-high">高风险</span></td>
+                    <td>兰江街道</td>
+                    <td style="color:#FF4D4F;font-weight:600;">1</td>
+                    <td>1</td>
+                    <td style="font-size:12px;">2025/07/09 09:10:00</td>
+                    <td><span class="status-tag status-pending">未处置</span></td>
+                    <td>—</td>
+                    <td><div class="action-btns"><button class="btn-action" onclick="openNamedWarningDetail('pending')">查看详情</button></div></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
-            <div class="pagination"><span class="total">共 8 条</span><button class="page-btn active">1</button></div>
+            <div class="pagination"><span class="total">共 9 条</span><button class="page-btn active">1</button></div>
           </div>
         </div>
 
@@ -3017,7 +3039,7 @@
                   <th style="width:110px;">操作</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="warningRuleTableBody">
                 <tr>
                   <td>1</td>
                   <td>婚恋家庭高风险激增预警</td>
@@ -3081,7 +3103,7 @@
                   <td>全市</td>
                   <td>—</td>
                   <td>—</td>
-                  <td>关联 ≥ <b>3</b> 件</td>
+                  <td>重点人员 · 关联 ≥ <b>3</b> 件</td>
                   <td>—</td>
                   <td><span class="rule-status-tag" style="background:#F6FFED;color:#52C41A;">已启用</span></td>
                   <td style="font-size:12px;">07/08 11:20</td>
@@ -3090,8 +3112,26 @@
                     <a href="javascript:void(0)" style="color:#FF4D4F;font-size:12px;">停用</a>
                   </td>
                 </tr>
-                <tr style="opacity:0.5;">
+                <tr>
                   <td>5</td>
+                  <td>指定盯防人员预警</td>
+                  <td><span class="rule-status-tag" style="background:#F9F0FF;color:#722ED1;">指定人员预警</span></td>
+                  <td><span class="level-tag level-high">高风险</span></td>
+                  <td>不限制</td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td>其中一人 · ≥ <b>1</b> 条</td>
+                  <td><div class="desc-text" style="max-width:150px;" title="张某某、李某某">张某某、李某某</div></td>
+                  <td><span class="rule-status-tag" style="background:#F6FFED;color:#52C41A;">已启用</span></td>
+                  <td style="font-size:12px;">07/09 09:10</td>
+                  <td>
+                    <a href="javascript:void(0)" onclick="openWarningRuleDetail(4)" style="color:#1677FF;font-size:12px;margin-right:8px;">查看</a>
+                    <a href="javascript:void(0)" style="color:#FF4D4F;font-size:12px;">停用</a>
+                  </td>
+                </tr>
+                <tr style="opacity:0.5;">
+                  <td>6</td>
                   <td>涉特殊人员纠纷预警</td>
                   <td><span class="rule-status-tag" style="background:#E6F4FF;color:#1677FF;">事项突增预警</span></td>
                   <td><span class="level-tag level-low">低风险</span></td>
@@ -3104,7 +3144,7 @@
                   <td><span class="rule-status-tag" style="background:#F5F5F5;color:#8C8C8C;">已停用</span></td>
                   <td style="font-size:12px;">07/05 16:00</td>
                   <td>
-                    <a href="javascript:void(0)" onclick="openWarningRuleDetail(4)" style="color:#1677FF;font-size:12px;margin-right:8px;">查看</a>
+                    <a href="javascript:void(0)" onclick="openWarningRuleDetail(5)" style="color:#1677FF;font-size:12px;margin-right:8px;">查看</a>
                     <a href="javascript:void(0)" style="color:#52C41A;font-size:12px;">启用</a>
                   </td>
                 </tr>
@@ -3118,7 +3158,7 @@
           <div class="search-panel">
             <div class="search-grid">
               <div class="search-field"><label>预警编号</label><input type="text" placeholder="请输入预警编号"></div>
-              <div class="search-field"><label>预警类型</label><select><option value="">请选择</option><option>事项突增预警</option><option>主体风险预警</option></select></div>
+              <div class="search-field"><label>预警类型</label><select><option value="">请选择</option><option>事项突增预警</option><option>主体风险预警</option><option>指定人员预警</option></select></div>
               <div class="search-field"><label>预警等级</label><select><option value="">请选择</option><option>高风险</option><option>中风险</option><option>低风险</option></select></div>
               <div class="search-field"><label>事项类型</label><select><option value="">请选择</option><option>婚恋家庭</option><option>邻里关系</option><option>涉众金融</option><option>欠薪欠资</option><option>涉法涉诉</option></select></div>
               <div class="search-field"><label>所属区域</label><select><option value="">请选择</option><option>兰江街道</option><option>云山街道</option><option>游埠镇</option><option>诸葛镇</option><option>马涧镇</option><option>永昌街道</option></select></div>
@@ -3176,11 +3216,22 @@
                     <td style="font-size:12px;">2025/07/02 10:30:00</td>
                     <td><div class="action-btns"><button class="btn-action" onclick="openModal('subjectWarningDetailModal')">查看详情</button></div></td>
                   </tr>
+                  <tr>
+                    <td style="font-family:monospace;font-size:12px;">YJ202507090001</td>
+                    <td><span class="rule-status-tag" style="background:#F9F0FF;color:#722ED1;font-size:11px;">指定人员</span></td>
+                    <td><span class="level-tag level-high">高风险</span></td>
+                    <td>邻里关系</td>
+                    <td>兰江街道</td>
+                    <td style="color:#FF4D4F;font-weight:600;">1</td>
+                    <td>1</td>
+                    <td style="font-size:12px;">2025/07/09 09:10:00</td>
+                    <td><div class="action-btns"><button class="btn-action" onclick="openNamedWarningDetail('pending')">查看详情</button></div></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
             <div class="pagination">
-              <span style="font-size:13px;color:#8C8C8C;">共 3 条</span>
+              <span style="font-size:13px;color:#8C8C8C;">共 4 条</span>
               <select class="form-select" style="width:80px;height:28px;margin:0 8px;"><option>10条/页</option><option>20条/页</option><option>50条/页</option></select>
               <button class="page-btn" style="border:1px solid #D9D9D9;background:#fff;cursor:not-allowed;color:#D9D9D9;">&lt;</button>
               <button class="page-btn active">1</button>
@@ -3195,7 +3246,7 @@
           <div class="search-panel">
             <div class="search-grid">
               <div class="search-field"><label>预警编号</label><input type="text" placeholder="请输入预警编号"></div>
-              <div class="search-field"><label>预警类型</label><select><option value="">请选择</option><option>事项突增预警</option><option>主体风险预警</option></select></div>
+              <div class="search-field"><label>预警类型</label><select><option value="">请选择</option><option>事项突增预警</option><option>主体风险预警</option><option>指定人员预警</option></select></div>
               <div class="search-field"><label>预警等级</label><select><option value="">请选择</option><option>高风险</option><option>中风险</option><option>低风险</option></select></div>
               <div class="search-field"><label>事项类型</label><select><option value="">请选择</option><option>婚恋家庭</option><option>邻里关系</option><option>涉众金融</option><option>欠薪欠资</option><option>涉法涉诉</option></select></div>
               <div class="search-field"><label>所属区域</label><select><option value="">请选择</option><option>兰江街道</option><option>云山街道</option><option>游埠镇</option><option>诸葛镇</option><option>马涧镇</option><option>永昌街道</option></select></div>
@@ -3256,11 +3307,23 @@
                     <td style="font-size:12px;">2025/07/02 09:30:00</td>
                     <td><div class="action-btns"><button class="btn-action" onclick="openSubjectDetail('done')">查看详情</button></div></td>
                   </tr>
+                  <tr>
+                    <td style="font-family:monospace;font-size:12px;">YJ202507030008</td>
+                    <td><span class="rule-status-tag" style="background:#F9F0FF;color:#722ED1;font-size:11px;">指定人员</span></td>
+                    <td><span class="level-tag level-high">高风险</span></td>
+                    <td>婚恋家庭</td>
+                    <td>云山街道</td>
+                    <td style="color:#FF4D4F;font-weight:600;">1</td>
+                    <td>1</td>
+                    <td style="font-size:12px;">2025/07/03 11:05:00</td>
+                    <td style="font-size:12px;">2025/07/03 16:40:00</td>
+                    <td><div class="action-btns"><button class="btn-action" onclick="openNamedWarningDetail('done')">查看详情</button></div></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
             <div class="pagination">
-              <span style="font-size:13px;color:#8C8C8C;">共 3 条</span>
+              <span style="font-size:13px;color:#8C8C8C;">共 4 条</span>
               <select class="form-select" style="width:80px;height:28px;margin:0 8px;"><option>10条/页</option><option>20条/页</option><option>50条/页</option></select>
               <button class="page-btn" style="border:1px solid #D9D9D9;background:#fff;cursor:not-allowed;color:#D9D9D9;">&lt;</button>
               <button class="page-btn active">1</button>
@@ -4589,6 +4652,9 @@
           <div style="grid-column:1/3;"><span style="color:#8C8C8C;">事项分级：</span><span id="detailCaseLevel"></span></div>
           <div style="grid-column:1/3;"><span style="color:#8C8C8C;">事项来源：</span><span id="detailSource"></span></div>
           <div style="grid-column:1/3;"><span style="color:#8C8C8C;">人员类型：</span><span id="detailPerson"></span></div>
+          <div id="detailKeyPersonRow" style="grid-column:1/3;display:none;"><span style="color:#8C8C8C;">是否为重点人员：</span><span id="detailKeyPerson"></span></div>
+          <div id="detailNamedPeopleRow" style="grid-column:1/3;display:none;"><span style="color:#8C8C8C;">配置人员：</span><span id="detailNamedPeople"></span></div>
+          <div id="detailNamedTriggerRow" style="grid-column:1/3;display:none;"><span style="color:#8C8C8C;">触发规则：</span><span id="detailNamedTrigger"></span></div>
           <div style="grid-column:1/3;"><span style="color:#8C8C8C;">附加标签：</span><span id="detailTags"></span></div>
           <div><span style="color:#8C8C8C;">触发条件：</span><span id="detailTrigger"></span></div>
         </div>
@@ -4851,8 +4917,9 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;font-size:13px;background:#FAFAFA;padding:14px;border-radius:6px;">
             <div><span style="color:#8C8C8C;">姓名：</span>张某某</div>
             <div><span style="color:#8C8C8C;">角色：</span>申请人</div>
-            <div><span style="color:#8C8C8C;">手机号：</span>138****5678</div>
-            <div><span style="color:#8C8C8C;">身份证号：</span>330781****1234</div>
+            <div><span style="color:#8C8C8C;">手机号：</span>13812345678</div>
+            <div><span style="color:#8C8C8C;">身份证号：</span>330781199001011234</div>
+            <div><span style="color:#8C8C8C;">是否重点人员：</span>是</div>
             <div><span style="color:#8C8C8C;">关联纠纷数：</span><span style="color:#FF4D4F;font-weight:600;">3 件</span></div>
           </div>
         </div>
@@ -4916,6 +4983,78 @@
       <div class="drawer-footer">
         <button class="btn-primary" id="subjectDetailProcessBtn" onclick="closeModal('subjectWarningDetailModal');openModal('warningProcessModal')">处置</button>
         <button class="btn-cancel" onclick="closeModal('subjectWarningDetailModal')">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 指定人员预警详情弹窗 ===== -->
+  <div class="modal-overlay" id="namedWarningDetailModal">
+    <div class="drawer" style="width:720px;max-width:90vw;">
+      <div class="drawer-header">
+        <h3>预警详情</h3>
+        <button class="drawer-close" onclick="closeModal('namedWarningDetailModal')">&times;</button>
+      </div>
+      <div class="drawer-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;font-size:13px;margin-bottom:16px;">
+          <div><span style="color:#8C8C8C;">预警编号：</span><span style="font-family:monospace;">YJ202507090001</span></div>
+          <div><span style="color:#8C8C8C;">预警类型：</span><span class="rule-status-tag" style="background:#F9F0FF;color:#722ED1;font-size:11px;">指定人员预警</span></div>
+          <div><span style="color:#8C8C8C;">预警等级：</span><span class="level-tag level-high" style="font-size:11px;">高风险</span></div>
+          <div><span style="color:#8C8C8C;">触发规则：</span><a href="javascript:void(0)" onclick="closeModal('namedWarningDetailModal');openWarningRuleDetail(4)" style="color:#1677FF;">指定盯防人员预警</a></div>
+          <div><span style="color:#8C8C8C;">触发时间：</span>2025/07/09 09:10:00</div>
+          <div><span style="color:#8C8C8C;">预警状态：</span><span class="status-tag status-pending">未处置</span></div>
+        </div>
+
+        <div style="border-top:1px solid #F0F0F0;padding-top:14px;margin-bottom:16px;">
+          <div style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">命中情况</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;font-size:13px;background:#FAFAFA;padding:14px;border-radius:6px;">
+            <div style="grid-column:1/3;"><span style="color:#8C8C8C;">触发规则：</span>关联配置人员其中一人即触发</div>
+            <div style="grid-column:1/3;"><span style="color:#8C8C8C;">配置人员：</span>张某某 13800001234、李某某 13900005678</div>
+            <div><span style="color:#8C8C8C;">命中人员：</span>张某某</div>
+            <div><span style="color:#8C8C8C;">角色：</span>申请人</div>
+            <div><span style="color:#8C8C8C;">手机号：</span>13800001234</div>
+            <div><span style="color:#8C8C8C;">关联纠纷数：</span><span style="color:#FF4D4F;font-weight:600;">1 条</span></div>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid #F0F0F0;padding-top:14px;">
+          <div style="font-size:14px;font-weight:600;color:#333;margin-bottom:10px;">关联矛盾纠纷事项 <span style="color:#8C8C8C;font-weight:400;font-size:12px;">共 1 条</span></div>
+          <table class="data-table thead-bg" style="min-width:auto;">
+            <thead><tr><th>事项编码</th><th>事项类型</th><th>事项分级</th><th>事项描述</th><th>角色</th><th>上报时间</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr>
+                <td style="font-family:monospace;font-size:12px;">2507090003</td>
+                <td>邻里关系</td>
+                <td><span class="level-tag level-mid">中风险</span></td>
+                <td><div style="white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5;" title="张某某与邻居因通行问题产生纠纷">张某某与邻居因通行问题产生纠纷</div></td>
+                <td>申请人</td>
+                <td style="font-size:12px;">2025/07/09</td>
+                <td><a href="javascript:void(0)" style="color:#1677FF;font-size:12px;">查看</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="border-top:1px solid #F0F0F0;padding-top:14px;margin-top:16px;">
+          <div style="background:#F5F7FA;border-radius:4px;padding:8px 14px;margin-bottom:18px;">
+            <span style="font-size:14px;font-weight:600;color:#333;">预警追踪</span>
+          </div>
+          <div>
+            <div style="display:flex;gap:12px;padding-bottom:20px;">
+              <div style="flex-shrink:0;width:12px;display:flex;flex-direction:column;align-items:center;">
+                <div style="width:12px;height:12px;border-radius:50%;background:#BFBFBF;flex-shrink:0;"></div>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:500;margin-bottom:4px;">预警生成</div>
+                <div style="font-size:13px;">兰溪市-社会治理中心</div>
+                <div style="font-size:12px;color:#8C8C8C;">2025-07-09 09:10:00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <button class="btn-primary" id="namedDetailProcessBtn" onclick="closeModal('namedWarningDetailModal');openModal('warningProcessModal')">处置</button>
+        <button class="btn-cancel" onclick="closeModal('namedWarningDetailModal')">关闭</button>
       </div>
     </div>
   </div>
@@ -5019,6 +5158,7 @@
                 <option value="">请选择预警类型</option>
                 <option value="surge">事项突增预警</option>
                 <option value="subject">主体风险预警</option>
+                <option value="named">指定人员预警</option>
               </select>
             </div>
             <div class="rule-form-item">
@@ -5299,6 +5439,12 @@
               </select>
             </div>
             <div class="condition-row" style="align-items:center;">
+              <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>是否为重点人员</span>
+              <label class="radio-item" style="margin-right:12px;"><input type="radio" name="isKeyPerson" value="all" id="keyPersonAll" checked> 不限</label>
+              <label class="radio-item" style="margin-right:12px;"><input type="radio" name="isKeyPerson" value="yes" id="keyPersonYes"> 是</label>
+              <label class="radio-item"><input type="radio" name="isKeyPerson" value="no" id="keyPersonNo"> 否</label>
+            </div>
+            <div class="condition-row" style="align-items:center;">
               <span class="cond-label"><span style="color:#FF4D4F;margin-right:2px;">*</span>关联矛盾纠纷数</span>
               <span style="font-size:13px;color:#333;">≥</span>
               <input type="number" id="subjectCount" value="3" min="1" style="width:70px;">
@@ -5313,9 +5459,29 @@
             </div>
           </div>
         </div>
+
+        <!-- 指定人员预警条件 -->
+        <div class="rule-form-section" id="namedPersonConditionSection" style="display:none;">
+          <div class="rule-form-title">触发条件</div>
+          <div class="rule-condition-builder">
+            <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;">
+              <span class="cond-label" style="min-width:auto;text-align:left;"><span style="color:#FF4D4F;margin-right:2px;">*</span>配置人员</span>
+              <div id="namedPersonList" style="width:100%;"></div>
+              <button type="button" class="btn-add-condition" style="margin-top:0;" onclick="addNamedPersonRow()">+ 添加人员</button>
+            </div>
+            <div class="condition-row" style="flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:0;">
+              <span class="cond-label" style="min-width:auto;text-align:left;"><span style="color:#FF4D4F;margin-right:2px;">*</span>触发规则</span>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <label class="radio-item"><input type="radio" name="namedTriggerMode" value="any" id="namedTriggerAny" checked> 关联配置人员其中一人即触发</label>
+                <label class="radio-item"><input type="radio" name="namedTriggerMode" value="all" id="namedTriggerAll"> 矛盾纠纷同时包含全部配置人员才触发</label>
+              </div>
+              <div style="color:#FA8C16;font-size:12px;background:#FFF7E6;padding:6px 10px;border-radius:4px;line-height:1.6;">提示：不限制统计时间。涉及配置人员的矛盾纠纷达到 1 条即触发预警。</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="drawer-footer">
-        <button class="btn-primary">保存</button>
+        <button class="btn-primary" onclick="saveWarningRule()">保存</button>
         <button class="btn-cancel" onclick="closeModal('addWarningRuleModal')">取消</button>
       </div>
     </div>
@@ -5836,6 +6002,16 @@
     }
     document.addEventListener('mouseover', function(e) { if (e.target.classList && e.target.classList.contains('desc-text')) showTip(e); });
     document.addEventListener('mouseout', function(e) { if (e.target.classList && e.target.classList.contains('desc-text')) hideTip(e); });
+
+    function toast(msg) {
+      var old = document.getElementById('pageToast');
+      if (old) old.remove();
+      var el = document.createElement('div');
+      el.id = 'pageToast';
+      el.textContent = msg;
+      document.body.appendChild(el);
+      setTimeout(function() { if (el.parentNode) el.remove(); }, 2000);
+    }
 
     function openModal(id) {
       document.getElementById(id).classList.add('show');
@@ -6990,16 +7166,36 @@
       var rule = warningRules[index];
       document.getElementById('detailRuleName').textContent = rule.name;
       document.getElementById('detailRuleStatus').innerHTML = rule.status === '启用' ? '<span style="color:#52C41A;">已启用</span>' : '<span style="color:#8C8C8C;">已停用</span>';
-      document.getElementById('detailRuleType').textContent = rule.type === 'surge' ? '事项突增预警' : '主体风险预警';
+      var typeMap = { surge: '事项突增预警', subject: '主体风险预警', named: '指定人员预警' };
+      document.getElementById('detailRuleType').textContent = typeMap[rule.type] || rule.type;
       document.getElementById('detailRuleLevel').textContent = rule.level;
-      document.getElementById('detailTimeRange').textContent = rule.type === 'surge' ? '近 ' + rule.timeValue + ' ' + rule.timeUnit : '近 ' + rule.months + ' 月';
-      document.getElementById('detailArea').textContent = rule.area === 'all' ? '全市' : (rule.areaList || []).join('、');
+      document.getElementById('detailTimeRange').textContent = rule.type === 'named' ? '不限制' : (rule.type === 'surge' ? '近 ' + rule.timeValue + ' ' + rule.timeUnit : '近 ' + rule.months + ' 月');
+      document.getElementById('detailArea').textContent = rule.type === 'named' ? '—' : (rule.area === 'all' ? '全市' : (rule.areaList || []).join('、') || '—');
       document.getElementById('detailCaseType').textContent = (rule.caseType && rule.caseType.length) ? rule.caseType.join('、') : '—';
       document.getElementById('detailCaseLevel').textContent = (rule.caseLevel && rule.caseLevel.length) ? rule.caseLevel.join('、') : '—';
       document.getElementById('detailSource').textContent = (rule.source && rule.source.length) ? rule.source.join('、') : '—';
       document.getElementById('detailPerson').textContent = (rule.person && rule.person.length) ? rule.person.join('、') : '—';
+      var keyPersonMap = { all: '不限', yes: '是', no: '否' };
+      var keyPersonRow = document.getElementById('detailKeyPersonRow');
+      if (rule.type === 'subject') {
+        keyPersonRow.style.display = '';
+        document.getElementById('detailKeyPerson').textContent = keyPersonMap[rule.isKeyPerson] || '不限';
+      } else {
+        keyPersonRow.style.display = 'none';
+      }
+      var namedPeopleRow = document.getElementById('detailNamedPeopleRow');
+      var namedTriggerRow = document.getElementById('detailNamedTriggerRow');
+      if (rule.type === 'named') {
+        namedPeopleRow.style.display = '';
+        namedTriggerRow.style.display = '';
+        document.getElementById('detailNamedPeople').textContent = (rule.namedPeople || []).map(function(p){ return p.name + ' ' + p.phone; }).join('、') || '—';
+        document.getElementById('detailNamedTrigger').textContent = rule.namedTriggerMode === 'all' ? '矛盾纠纷同时包含全部配置人员才触发' : '关联配置人员其中一人即触发';
+      } else {
+        namedPeopleRow.style.display = 'none';
+        namedTriggerRow.style.display = 'none';
+      }
       document.getElementById('detailTags').textContent = (rule.tags && rule.tags.length) ? rule.tags.join('、') : '—';
-      document.getElementById('detailTrigger').textContent = rule.type === 'surge' ? '数量 ≥ ' + rule.count + ' 条' : '关联 ≥ ' + rule.count + ' 件';
+      document.getElementById('detailTrigger').textContent = rule.type === 'surge' ? '数量 ≥ ' + rule.count + ' 条' : (rule.type === 'named' ? '涉及配置人员的矛盾纠纷 ≥ 1 条' : '关联 ≥ ' + rule.count + ' 件');
       openModal('warningRuleDetailModal');
     }
 
@@ -7008,6 +7204,48 @@
       var type = document.getElementById('ruleType').value;
       document.getElementById('surgeConditionSection').style.display = type === 'surge' ? 'block' : 'none';
       document.getElementById('subjectConditionSection').style.display = type === 'subject' ? 'block' : 'none';
+      document.getElementById('namedPersonConditionSection').style.display = type === 'named' ? 'block' : 'none';
+      if (type === 'named') ensureNamedPersonRows();
+    }
+
+    function namedPersonRowHtml() {
+      return '<div class="named-person-row">' +
+        '<input type="text" class="named-person-name" placeholder="请输入姓名（必填）">' +
+        '<input type="text" class="named-person-phone" placeholder="请输入手机号（选填）" maxlength="11">' +
+        '<a class="named-person-del" href="javascript:void(0)" onclick="removeNamedPersonRow(this)">删除</a>' +
+        '</div>';
+    }
+
+    function ensureNamedPersonRows() {
+      var list = document.getElementById('namedPersonList');
+      if (!list.children.length) addNamedPersonRow();
+      updateNamedPersonDeleteBtns();
+    }
+
+    function addNamedPersonRow() {
+      document.getElementById('namedPersonList').insertAdjacentHTML('beforeend', namedPersonRowHtml());
+      updateNamedPersonDeleteBtns();
+    }
+
+    function removeNamedPersonRow(el) {
+      var list = document.getElementById('namedPersonList');
+      if (list.children.length <= 1) return;
+      el.closest('.named-person-row').remove();
+      updateNamedPersonDeleteBtns();
+    }
+
+    function updateNamedPersonDeleteBtns() {
+      var list = document.getElementById('namedPersonList');
+      var rows = list.querySelectorAll('.named-person-row');
+      rows.forEach(function(row) {
+        row.querySelector('.named-person-del').style.visibility = rows.length > 1 ? 'visible' : 'hidden';
+      });
+    }
+
+    function resetNamedPersonForm() {
+      document.getElementById('namedPersonList').innerHTML = namedPersonRowHtml();
+      document.getElementById('namedTriggerAny').checked = true;
+      updateNamedPersonDeleteBtns();
     }
 
     // 切换统计时间范围
@@ -7021,7 +7259,8 @@
       { name: '婚恋家庭高风险激增预警', type: 'surge', level: '高风险', status: '启用', timeValue: 7, timeUnit: '天', area: 'all', caseType: ['婚恋家庭'], caseLevel: ['高风险'], source: ['大厅来访','群众线索','网格事件'], person: [], tags: ['扬言行为','暴力倾向','使用刀具/器具'], operator: '≥', count: 10 },
       { name: '邻里关系中风险持续上升预警', type: 'surge', level: '高风险', status: '启用', timeValue: 3, timeUnit: '天', area: 'custom', areaList: ['兰江街道','游埠镇','马涧镇'], caseType: ['邻里关系'], caseLevel: ['中风险'], source: [], person: [], tags: ['肢体冲突','积怨（6个月以上）'], operator: '≥', count: 8 },
       { name: '涉众金融高风险积怨预警', type: 'surge', level: '中风险', status: '启用', timeValue: 14, timeUnit: '天', area: 'custom', areaList: ['诸葛镇','马涧镇'], caseType: ['涉众金融'], caseLevel: ['高风险'], source: [], person: [], tags: ['涉经济纠纷','积怨（6个月以上）'], operator: '≥', count: 5 },
-      { name: '重点人员重复涉诉预警', type: 'subject', level: '高风险', status: '启用', roles: ['申请人','被申请人'], matchMode: 'name', operator: '≥', count: 3, timeType: 'recent', months: 6 },
+      { name: '重点人员重复涉诉预警', type: 'subject', level: '高风险', status: '启用', roles: ['申请人','被申请人'], matchMode: 'name', isKeyPerson: 'yes', operator: '≥', count: 3, timeType: 'recent', months: 6 },
+      { name: '指定盯防人员预警', type: 'named', level: '高风险', status: '启用', namedPeople: [{name:'张某某', phone:'13800001234'},{name:'李某某', phone:'13900005678'}], namedTriggerMode: 'any' },
       { name: '涉特殊人员纠纷预警', type: 'surge', level: '低风险', status: '停用', timeValue: 30, timeUnit: '天', area: 'all', caseType: [], caseLevel: [], source: [], person: [], tags: ['暴力倾向','危险/过激行为','购买危险物品'], operator: '≥', count: 3 }
     ];
 
@@ -7048,6 +7287,10 @@
         document.getElementById('roleApplicant').checked = rule.roles.indexOf('申请人') >= 0;
         document.getElementById('roleRespondent').checked = rule.roles.indexOf('被申请人') >= 0;
         document.getElementById('matchMode').value = rule.matchMode || 'name';
+        var keyVal = rule.isKeyPerson || 'all';
+        document.getElementById('keyPersonAll').checked = keyVal === 'all';
+        document.getElementById('keyPersonYes').checked = keyVal === 'yes';
+        document.getElementById('keyPersonNo').checked = keyVal === 'no';
         document.getElementById('subjectOperator').value = rule.operator || '≥';
         document.getElementById('subjectCount').value = rule.count || '';
         if (rule.timeType === 'all') {
@@ -7057,7 +7300,27 @@
           document.getElementById('timeMonths').value = rule.months || '';
         }
         toggleTimeRange();
+      } else if (rule.type === 'named') {
+        fillNamedPersonForm(rule.namedPeople || []);
+        if (rule.namedTriggerMode === 'all') {
+          document.getElementById('namedTriggerAll').checked = true;
+        } else {
+          document.getElementById('namedTriggerAny').checked = true;
+        }
       }
+    }
+
+    function fillNamedPersonForm(people) {
+      var list = document.getElementById('namedPersonList');
+      list.innerHTML = '';
+      var items = people.length ? people : [{name:'', phone:''}];
+      items.forEach(function(){ addNamedPersonRow(); });
+      var rows = list.querySelectorAll('.named-person-row');
+      items.forEach(function(p, i) {
+        rows[i].querySelector('.named-person-name').value = p.name || '';
+        rows[i].querySelector('.named-person-phone').value = p.phone || '';
+      });
+      updateNamedPersonDeleteBtns();
     }
 
     // 重置规则表单
@@ -7068,6 +7331,129 @@
       document.getElementById('ruleStatus').value = '启用';
       document.getElementById('surgeConditionSection').style.display = 'none';
       document.getElementById('subjectConditionSection').style.display = 'none';
+      document.getElementById('namedPersonConditionSection').style.display = 'none';
+      document.getElementById('keyPersonAll').checked = true;
+      resetNamedPersonForm();
+    }
+
+    function collectNamedPeople() {
+      var people = [];
+      document.querySelectorAll('#namedPersonList .named-person-row').forEach(function(row) {
+        people.push({
+          name: (row.querySelector('.named-person-name').value || '').trim(),
+          phone: (row.querySelector('.named-person-phone').value || '').trim()
+        });
+      });
+      return people;
+    }
+
+    function saveWarningRule() {
+      var name = document.getElementById('ruleName').value.trim();
+      var type = document.getElementById('ruleType').value;
+      var level = document.getElementById('ruleLevel').value;
+      var status = document.getElementById('ruleStatus').value || '启用';
+      if (!name) { toast('请输入规则名称'); return; }
+      if (!type) { toast('请选择预警类型'); return; }
+      if (!level) { toast('请选择预警等级'); return; }
+
+      var rule = { name: name, type: type, level: level, status: status };
+
+      if (type === 'named') {
+        var people = collectNamedPeople();
+        if (!people.length) { toast('请至少配置一名人员'); return; }
+        for (var i = 0; i < people.length; i++) {
+          if (!people[i].name) { toast('请填写配置人员姓名'); return; }
+          if (people[i].phone && !/^1\d{10}$/.test(people[i].phone)) { toast('配置人员手机号须为11位手机号'); return; }
+        }
+        rule.namedPeople = people;
+        rule.namedTriggerMode = document.getElementById('namedTriggerAll').checked ? 'all' : 'any';
+      } else if (type === 'subject') {
+        var roles = [];
+        if (document.getElementById('roleApplicant').checked) roles.push('申请人');
+        if (document.getElementById('roleRespondent').checked) roles.push('被申请人');
+        if (!roles.length) { toast('请选择当事人角色'); return; }
+        var count = parseInt(document.getElementById('subjectCount').value, 10);
+        if (!count || count < 1) { toast('请填写关联矛盾纠纷数'); return; }
+        rule.roles = roles;
+        rule.matchMode = document.getElementById('matchMode').value;
+        rule.isKeyPerson = document.getElementById('keyPersonYes').checked ? 'yes' : (document.getElementById('keyPersonNo').checked ? 'no' : 'all');
+        rule.operator = '≥';
+        rule.count = count;
+        rule.timeType = document.getElementById('timeAll').checked ? 'all' : 'recent';
+        rule.months = parseInt(document.getElementById('timeMonths').value, 10) || '';
+        if (rule.timeType === 'recent' && !rule.months) { toast('请填写统计时间范围'); return; }
+      } else if (type === 'surge') {
+        var timeValue = parseInt(document.getElementById('surgeTimeValue').value, 10);
+        var surgeCount = parseInt(document.getElementById('surgeCount').value, 10);
+        if (!timeValue || timeValue < 1) { toast('请填写时间范围'); return; }
+        if (!surgeCount || surgeCount < 1) { toast('请填写触发数量'); return; }
+        rule.timeValue = timeValue;
+        rule.timeUnit = document.getElementById('surgeTimeUnit').value || '天';
+        rule.area = document.getElementById('areaCustom').checked ? 'custom' : 'all';
+        rule.operator = '≥';
+        rule.count = surgeCount;
+        rule.caseType = [];
+        rule.caseLevel = [];
+        rule.source = [];
+        rule.person = [];
+        rule.tags = [];
+      }
+
+      warningRules.push(rule);
+      appendWarningRuleRow(rule, warningRules.length - 1);
+      toast('保存成功');
+      closeModal('addWarningRuleModal');
+    }
+
+    function appendWarningRuleRow(rule, index) {
+      var typeMap = { surge: '事项突增预警', subject: '主体风险预警', named: '指定人员预警' };
+      var typeStyle = {
+        surge: 'background:#E6F4FF;color:#1677FF;',
+        subject: 'background:#FFF7E6;color:#FA8C16;',
+        named: 'background:#F9F0FF;color:#722ED1;'
+      };
+      var levelClass = rule.level === '高风险' ? 'level-high' : (rule.level === '中风险' ? 'level-mid' : 'level-low');
+      var timeText = rule.type === 'named' ? '不限制' : (rule.type === 'surge' ? ('近 ' + rule.timeValue + ' ' + rule.timeUnit) : (rule.timeType === 'all' ? '历史所有' : ('近 ' + rule.months + ' 月')));
+      var triggerText = rule.type === 'surge'
+        ? ('数量 ≥ <b>' + rule.count + '</b> 条')
+        : (rule.type === 'named'
+          ? ((rule.namedTriggerMode === 'all' ? '全部人员' : '其中一人') + ' · ≥ <b>1</b> 条')
+          : ((rule.isKeyPerson === 'yes' ? '重点人员 · ' : '') + '关联 ≥ <b>' + rule.count + '</b> 件'));
+      var extra = '—';
+      if (rule.type === 'named') {
+        extra = (rule.namedPeople || []).map(function(p){ return p.name; }).join('、') || '—';
+      } else if (rule.tags && rule.tags.length) {
+        extra = rule.tags.join('、');
+      }
+      var extraHtml = extra === '—' ? '—' : '<div class="desc-text" style="max-width:150px;" title="' + extra.replace(/"/g, '&quot;') + '">' + extra + '</div>';
+      var statusOn = rule.status !== '停用';
+      var html = '<td>' + (document.getElementById('warningRuleTableBody').rows.length) + '</td>' +
+        '<td>' + rule.name.replace(/</g, '&lt;') + '</td>' +
+        '<td><span class="rule-status-tag" style="' + (typeStyle[rule.type] || '') + '">' + typeMap[rule.type] + '</span></td>' +
+        '<td><span class="level-tag ' + levelClass + '">' + rule.level + '</span></td>' +
+        '<td>' + timeText + '</td>' +
+        '<td>' + (rule.type === 'named' ? '—' : (rule.area === 'all' ? '全市' : '—')) + '</td>' +
+        '<td>—</td><td>—</td>' +
+        '<td>' + triggerText + '</td>' +
+        '<td>' + extraHtml + '</td>' +
+        '<td><span class="rule-status-tag" style="' + (statusOn ? 'background:#F6FFED;color:#52C41A;">已启用' : 'background:#F5F5F5;color:#8C8C8C;">已停用') + '</span></td>' +
+        '<td style="font-size:12px;">—</td>' +
+        '<td><a href="javascript:void(0)" onclick="openWarningRuleDetail(' + index + ')" style="color:#1677FF;font-size:12px;margin-right:8px;">查看</a>' +
+        '<a href="javascript:void(0)" style="color:' + (statusOn ? '#FF4D4F' : '#52C41A') + ';font-size:12px;">' + (statusOn ? '停用' : '启用') + '</a></td>';
+
+      var tbody = document.getElementById('warningRuleTableBody');
+      var tr = document.createElement('tr');
+      if (!statusOn) tr.style.opacity = '0.5';
+      tr.innerHTML = html;
+      var disabled = tbody.querySelector('tr[style*="opacity"]');
+      if (disabled) {
+        tbody.insertBefore(tr, disabled);
+        tr.querySelector('td').textContent = tbody.rows.length - 1;
+        disabled.querySelector('td').textContent = tbody.rows.length;
+      } else {
+        tbody.appendChild(tr);
+        tr.querySelector('td').textContent = tbody.rows.length;
+      }
     }
 
     // 打开预警详情，根据状态显示不同追踪节点
@@ -7097,6 +7483,11 @@
     function openSubjectDetail(status) {
       document.getElementById('subjectDetailProcessBtn').style.display = (status === 'done' || status === 'processing') ? 'none' : '';
       openModal('subjectWarningDetailModal');
+    }
+
+    function openNamedWarningDetail(status) {
+      document.getElementById('namedDetailProcessBtn').style.display = (status === 'done' || status === 'processing') ? 'none' : '';
+      openModal('namedWarningDetailModal');
     }
 
     function toggleCustomDateRange() {
